@@ -2,7 +2,6 @@ import {Injectable, EventEmitter} from '@angular/core';
 import { Contestant } from './contestant';
 import { PRIZES } from './prizes';
 import { Observable } from 'rxjs';
-import { filter, distinctUntilChanged } from 'rxjs/operator';
 
 const CONTESTANT_KEY = 'contestants';
 const ELIMINATED_KEY = 'eliminated';
