@@ -41,13 +41,25 @@ export class ContestantGridComponent implements OnInit {
         }
     }
 
+    recentlyEliminated = () => {
+        return this.eliminatedList.slice(Math.max(this.eliminatedList.length - 10, 0)).reverse();
+    }
+
     undo = () => {
         const contestant = this.eliminatedList.pop();
         contestant.eliminated = false;
         localStorage.setItem('eliminatedList', JSON.stringify(this.eliminatedList));
     }
 
-    onContestantClick = (contestant: Contestant) => {
+    onContestantClick = (event: any, contestant: Contestant) => {
+        if (event.ctrlKey) {
+
+        } else {
+            this.eliminateContestant(contestant);
+        }
+    }
+
+    eliminateContestant = (contestant: Contestant) => {
         contestant.eliminated = true;
         this.eliminatedList.push(contestant);
         localStorage.setItem('eliminatedList', JSON.stringify(this.eliminatedList));

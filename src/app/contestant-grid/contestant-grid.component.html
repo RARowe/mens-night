@@ -2,8 +2,8 @@
     <tbody>
         <tr *ngFor="let row of rows">
             <td *ngFor="let c of row" class="grid-space" [style.backgroundColor]="c.eliminated ? 'red' : ''">
-                <a *ngIf="!c.eliminated" href="#" (click)="onContestantClick(c)">{{ c.id }} {{ c.name }}</a>
-                <span *ngIf="c.eliminated" href="#">{{ c.id }} {{ c.name }}</span>
+                <a *ngIf="!c.eliminated" href="#" (click)="onContestantClick($event, c)">{{ c.id }}. {{ c.name }}</a>
+                <span *ngIf="c.eliminated" href="#">{{ c.id }}. {{ c.name }}</span>
             </td>
         </tr>
     </tbody>
@@ -21,7 +21,13 @@
         <input type="checkbox"
            [checked]="soundOn"
            (change)="soundOn = !soundOn"/>
-        </div>
+    </div>
+    <div style="float: left; margin-top:30px">
+    <h1>
+        Recently Eliminated (Closer to top = More recent)
+    </h1>
+    <h2 *ngFor="let c of recentlyEliminated()">{{c.id}}. {{c.name}}</h2>
+    </div>
 </div>
 <div *ngIf="removingContestant" style="text-align: center; margin-top:300px">
     <span class="large-text" *ngIf="!eliminated">{{ removingContestant.id }}. {{ removingContestant.name }}</span>

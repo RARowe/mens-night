@@ -30,7 +30,7 @@ export class ReadFileComponent implements OnInit {
                                 .map(s => s.split(','))
                                 .map(s => ({ id: parseInt(s[0]), name: s[1] }));
                                 
-            this.onFileContentLoaded.emit(content);
+            this.onFileContentLoaded.emit(<Contestant[]>content);
         };
         // start reading the file. When it is done, calls the onload event defined above.
         reader.readAsBinaryString(this.fileInput.files[0]);
