@@ -2,7 +2,7 @@
     <tbody>
         <tr *ngFor="let row of rows">
             <td *ngFor="let c of row" class="grid-space" [style.backgroundColor]="c.eliminated ? 'red' : ''">
-                <a *ngIf="!c.eliminated" href="#" (click)="onContestantClick($event, c)">{{ c.id }}. {{ c.name }}</a>
+                <a *ngIf="!c.eliminated" href="#" (click)="onContestantClick(c)">{{ c.id }}. {{ c.name }}</a>
                 <span *ngIf="c.eliminated" href="#">{{ c.id }}. {{ c.name }}</span>
             </td>
         </tr>

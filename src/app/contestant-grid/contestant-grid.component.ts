@@ -51,15 +51,7 @@ export class ContestantGridComponent implements OnInit {
         localStorage.setItem('eliminatedList', JSON.stringify(this.eliminatedList));
     }
 
-    onContestantClick = (event: any, contestant: Contestant) => {
-        if (event.ctrlKey) {
-
-        } else {
-            this.eliminateContestant(contestant);
-        }
-    }
-
-    eliminateContestant = (contestant: Contestant) => {
+    onContestantClick = (contestant: Contestant) => {
         contestant.eliminated = true;
         this.eliminatedList.push(contestant);
         localStorage.setItem('eliminatedList', JSON.stringify(this.eliminatedList));
