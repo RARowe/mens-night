@@ -1,5 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Contestant } from '../contestant';
+import { PRIZES } from '../prizes';
+import { GameService } from '../game.service';
 
 @Component({
   selector: 'contestant-grid',
@@ -12,12 +14,17 @@ export class ContestantGridComponent implements OnInit {
     @Input()
     public eliminatedList: Contestant[];
 
+    public turn: number;
     public rows: Array<Contestant[]> = [];
     public removingContestant: Contestant;
     public eliminated: boolean = false;
+    public winner: boolean = false;
     public animationOn = true;
     public soundOn = true;
 
+    constructor(game: GameService) {
+        
+    }
     ngOnInit() {
         for (let i = 0; i < 15; i++) {
             this.rows.push([]);
@@ -30,6 +37,7 @@ export class ContestantGridComponent implements OnInit {
         }
 
         this.eliminatedList = this.eliminatedList || [];
+        this.turn = this.eliminatedList.length + 1;
 
         if (this.eliminatedList.length > 0) {
             for (let i = 0; i < this.eliminatedList.length; i++) {
@@ -52,21 +60,28 @@ export class ContestantGridComponent implements OnInit {
     }
 
     onContestantClick = (contestant: Contestant) => {
-        contestant.eliminated = true;
+        this.turn += 1;
+        if (PRIZES[this.turn]) {
+            contestant.winner = true;
+        } else {
+            contestant.eliminated = true;
+        }
         this.eliminatedList.push(contestant);
         localStorage.setItem('eliminatedList', JSON.stringify(this.eliminatedList));
 
         if (this.animationOn) {
             this.removingContestant = contestant;
             setTimeout(() => {
-                this.eliminated = true;
-                if (this.soundOn) { (<any>document.getElementById('myAudio')).play(); }
+                if (contestant.eliminated) { this.eliminated = true; }
+                if (contestant.winner) { this.winner = true; }
+                if (this.soundOn) { (<any>document.getElementById(contestant.eliminated ? 'buzzer' : 'kaching')).play(); }
             }, 1000);
         }
     }
 
     hideRemoveAnimation = () => {
         this.eliminated = false;
+        this.winner = false;
         this.removingContestant = null;
     }
 }

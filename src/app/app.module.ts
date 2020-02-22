@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { ReadFileComponent } from './read-file/read-file.component';
 import { ContestantGridComponent } from './contestant-grid/contestant-grid.component';
+import { GameService } from './game.service';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,7 @@ import { ContestantGridComponent } from './contestant-grid/contestant-grid.compo
   imports: [
     BrowserModule
   ],
-  providers: [],
+  providers: [GameService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

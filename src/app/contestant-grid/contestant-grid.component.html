@@ -1,3 +1,4 @@
+<h1>Pick #: {{this.turn}}</h1>
 <table *ngIf="!removingContestant" class="grid" border="2">
     <tbody>
         <tr *ngFor="let row of rows">
@@ -32,9 +33,13 @@
 <div *ngIf="removingContestant" style="text-align: center; margin-top:300px">
     <span class="large-text" *ngIf="!eliminated">{{ removingContestant.id }}. {{ removingContestant.name }}</span>
     <span class="large-text eliminated" *ngIf="eliminated" (click)="hideRemoveAnimation()">{{ removingContestant.id }}. {{ removingContestant.name }}</span>
+    <span class="large-text winner" *ngIf="winner" (click)="hideRemoveAnimation()">$$$ {{ removingContestant.id }}. {{ removingContestant.name }} $$$</span>
 </div>
 <div>
-    <audio id="myAudio">
+    <audio id="buzzer">
         <source src="assets/buzzer.wav" type="audio/wav">
-      </audio>
+    </audio>
+    <audio id="kaching">
+        <source src="assets/kaching.wav" type="audio/wav">
+    </audio>
 </div>
