@@ -5,19 +5,5 @@
 
 .grid-space {
     padding: 10px 10px 10px 10px;
-}
-
-.large-text {
-    font-size: 200pt;
-    font-weight: bold;
-}
-
-.eliminated {
-    text-decoration: line-through;
-    text-decoration-color:red;
-}
-
-.winner {
-    color: green;
-    
+    font-size: 16pt;
 }

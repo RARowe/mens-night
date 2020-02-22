@@ -1,6 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Contestant } from '../contestant';
-import { PRIZES } from '../prizes';
 import { GameService } from '../game.service';
 
 @Component({
@@ -8,80 +7,25 @@ import { GameService } from '../game.service';
   templateUrl: './contestant-grid.component.html',
   styleUrls: ['./contestant-grid.component.css']
 })
-export class ContestantGridComponent implements OnInit {
+export class ContestantGridComponent {
     @Input()
-    public contestants: Contestant[];
-    @Input()
-    public eliminatedList: Contestant[];
-
-    public turn: number;
     public rows: Array<Contestant[]> = [];
-    public removingContestant: Contestant;
-    public eliminated: boolean = false;
-    public winner: boolean = false;
-    public animationOn = true;
-    public soundOn = true;
 
-    constructor(game: GameService) {
-        
-    }
-    ngOnInit() {
-        for (let i = 0; i < 15; i++) {
-            this.rows.push([]);
-        }
+    constructor(private readonly _game: GameService) { }
 
-        for (let i = 0; i < 10; i++) {
-            for (let j = 0; j < 15; j++) {
-                this.rows[j].push(this.contestants[(i * 15) + j]);
-            }
-        }
-
-        this.eliminatedList = this.eliminatedList || [];
-        this.turn = this.eliminatedList.length + 1;
-
-        if (this.eliminatedList.length > 0) {
-            for (let i = 0; i < this.eliminatedList.length; i++) {
-                const c = this.eliminatedList[i];
-                const c2 = this.contestants.find(c2 => c2.id === c.id);
-                c2.eliminated = true;
-                this.eliminatedList[i] = c2;
-            }
-        }
+    public undo = (): void => {
+        this._game.undo();
     }
 
-    recentlyEliminated = () => {
-        return this.eliminatedList.slice(Math.max(this.eliminatedList.length - 10, 0)).reverse();
+    public onContestantClick = (contestant: Contestant): void => {
+        this._game.pick(contestant);
     }
 
-    undo = () => {
-        const contestant = this.eliminatedList.pop();
-        contestant.eliminated = false;
-        localStorage.setItem('eliminatedList', JSON.stringify(this.eliminatedList));
+    public get recentlyEliminated() {
+        return this._game.recentlyEliminated;
     }
 
-    onContestantClick = (contestant: Contestant) => {
-        this.turn += 1;
-        if (PRIZES[this.turn]) {
-            contestant.winner = true;
-        } else {
-            contestant.eliminated = true;
-        }
-        this.eliminatedList.push(contestant);
-        localStorage.setItem('eliminatedList', JSON.stringify(this.eliminatedList));
-
-        if (this.animationOn) {
-            this.removingContestant = contestant;
-            setTimeout(() => {
-                if (contestant.eliminated) { this.eliminated = true; }
-                if (contestant.winner) { this.winner = true; }
-                if (this.soundOn) { (<any>document.getElementById(contestant.eliminated ? 'buzzer' : 'kaching')).play(); }
-            }, 1000);
-        }
-    }
-
-    hideRemoveAnimation = () => {
-        this.eliminated = false;
-        this.winner = false;
-        this.removingContestant = null;
+    public get turn() {
+        return this._game.turn;
     }
 }

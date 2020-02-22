@@ -1,2 +1,2 @@
 <read-file *ngIf="showFileInput" (onFileContentLoaded)="onFileContentLoaded($event)"></read-file>
-<contestant-grid *ngIf="!showFileInput" [contestants]="contestants" [eliminatedList]="eliminatedList"></contestant-grid>
+<contestant-grid *ngIf="!showFileInput" [rows]="rows"></contestant-grid>

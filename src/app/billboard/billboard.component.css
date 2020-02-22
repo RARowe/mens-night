@@ -1,0 +1,29 @@
+.cover-screen {
+    position:fixed;
+    padding:0;
+    margin:0;
+    top:0;
+    left:0;
+    width: 100%;
+    height: 100%;
+    background:rgb(255, 255, 255);
+}
+
+.billboard-content {
+    text-align: center;
+    margin-top: 300px;
+}
+
+.large-text {
+    font-size: 200pt;
+    font-weight: bold;
+}
+
+.eliminated {
+    text-decoration: line-through;
+    text-decoration-color:red;
+}
+
+.winner {
+    color: green;
+}
